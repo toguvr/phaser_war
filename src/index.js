@@ -333,14 +333,16 @@ function bulletHitPlayer(bullet, player) {
     return;
   }
 
+  const playerShoot = players[bullet.playerIndex];
+
+  if (!playerShoot.active) {
+    return;
+  }
+
   player.setActive(false);
   player.setVisible(false);
   playerNames[playerIndex].setVisible(false);
   onBulletHit(bullet);
-  // Atualize os arrays para refletir a remoção do jogador
-  // players.splice(playerIndex, 1);
-  // playerKeys.splice(playerIndex, 1);
-  // playerStates.splice(playerIndex, 1);
 
   const explosion = gameScene.physics.add.sprite(
     player.x,
@@ -434,8 +436,6 @@ function shootBullet(player, playerState) {
 
   const speed = 500;
 
-  console.log('aqui', direction);
-  console.log('aqui', player.body.rotation);
   if (direction === 'up') {
     bullet.setVelocity(0, -speed);
     bullet.setRotation(0);
